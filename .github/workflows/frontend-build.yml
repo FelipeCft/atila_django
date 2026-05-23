@@ -1,0 +1,61 @@
+name: Build Frontend Docker Image
+
+on:
+  pull_request:
+    branches:
+      - main
+    types: [opened, synchronize, reopened]
+
+jobs:
+  build:
+    if: github.head_ref == 'dev'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Log in to the Container registry
+      uses: docker/login-action@v2
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Build and Push Docker image
+      run: |
+        ls -la FRONTEND/atila-front
+        # Convert owner to lowercase for Docker image name compliance
+        OWNER=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
+        IMAGE_ID=ghcr.io/$OWNER/atila-frontend
+
+        # Crear múltiples tags para mejor identificación
+        SHORT_SHA=$(echo ${{ github.sha }} | cut -c1-7)
+        BRANCH_NAME=$(echo ${{ github.head_ref }} | sed 's/\//-/g')
+        TIMESTAMP=$(date +%Y%m%d-%H%M%S)
+
+        echo "Building frontend image with multiple tags:"
+        echo "  - $IMAGE_ID:${{ github.sha }} (commit completo)"
+        echo "  - $IMAGE_ID:$SHORT_SHA (commit corto)"
+        echo "  - $IMAGE_ID:$BRANCH_NAME-$SHORT_SHA (rama + commit)"
+        echo "  - $IMAGE_ID:$BRANCH_NAME-latest (última de la rama)"
+        echo "  - $IMAGE_ID:$TIMESTAMP (timestamp)"
+
+        # Build con múltiples tags
+        docker build --progress=plain \
+          -t $IMAGE_ID:${{ github.sha }} \
+          -t $IMAGE_ID:$SHORT_SHA \
+          -t $IMAGE_ID:$BRANCH_NAME-$SHORT_SHA \
+          -t $IMAGE_ID:$BRANCH_NAME-latest \
+          -t $IMAGE_ID:$TIMESTAMP \
+          FRONTEND/atila-front
+
+        # Push todas las tags
+        docker push $IMAGE_ID:${{ github.sha }}
+        docker push $IMAGE_ID:$SHORT_SHA
+        docker push $IMAGE_ID:$BRANCH_NAME-$SHORT_SHA
+        docker push $IMAGE_ID:$BRANCH_NAME-latest
+        docker push $IMAGE_ID:$TIMESTAMP

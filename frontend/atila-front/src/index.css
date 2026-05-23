@@ -1,0 +1,87 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+    --color-primary: #0ea5e9;
+    --color-primary-dark: #0284c7;
+    --color-secondary: #64748b;
+    --color-accent: #f43f5e;
+    --color-background: #f8fafc;
+    --color-surface: #ffffff;
+    --color-text: #0f172a;
+    --color-text-light: #64748b;
+    --color-border: #e2e8f0;
+
+    --radius-xl: 0.75rem;
+
+    --font-inter: 'Inter', sans-serif;
+    --font-outfit: 'Outfit', sans-serif;
+
+    @keyframes bounce-subtle {
+
+        0%,
+        100% {
+            transform: translateY(0);
+        }
+
+        50% {
+            transform: translateY(-10px);
+        }
+    }
+}
+
+@layer base {
+    body {
+        @apply bg-background text-text font-inter antialiased;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        @apply font-outfit font-semibold text-slate-800;
+    }
+}
+
+@layer components {
+    .glass {
+        @apply bg-white/70 backdrop-blur-xl border border-white/20;
+    }
+
+    .btn {
+        @apply inline-flex items-center justify-center px-5 py-2.5 text-sm font-medium rounded-xl transition-all duration-200 cursor-pointer gap-2;
+    }
+
+    .btn-primary {
+        @apply bg-primary text-white hover:bg-primary-dark hover:-translate-y-0.5 hover:shadow-lg hover:shadow-primary/20;
+    }
+
+    .btn-outline {
+        @apply bg-transparent border border-border text-text hover:bg-surface hover:border-primary hover:text-primary;
+    }
+
+    .container-custom {
+        @apply max-w-7xl mx-auto px-6;
+    }
+
+    .animate-bounce-subtle {
+        animation: bounce-subtle 3s ease-in-out infinite;
+    }
+}
+
+/* ─── Sileo: texto blanco sobre fills saturados ────────────── */
+/* Especificidad (0,3,0) supera la de Sileo (0,2,0) */
+[data-sileo-toast] [data-sileo-title][data-state] {
+    --sileo-tone: #ffffff;
+}
+
+[data-sileo-toast] [data-sileo-badge][data-state] {
+    --sileo-tone: #ffffff;
+    --sileo-tone-bg: rgba(255, 255, 255, 0.2);
+}
+
+[data-sileo-toast] [data-sileo-description] {
+    color: #ffffff;
+}

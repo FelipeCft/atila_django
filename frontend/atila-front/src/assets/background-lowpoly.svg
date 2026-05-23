@@ -1,0 +1,101 @@
+<svg width="1920" height="1080" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+  <rect width="100%" height="100%" fill="#ffffff" />
+  
+  <g opacity="0.8">
+    <!-- Row 1 -->
+    <polygon points="0,0 150,0 120,100 0,80" fill="#fcfcfc" />
+    <polygon points="150,0 300,0 280,110 120,100" fill="#f5f5f5" />
+    <polygon points="300,0 480,0 450,120 280,110" fill="#eeeeee" />
+    <polygon points="480,0 650,0 600,100 450,120" fill="#f8f8f8" />
+    <polygon points="650,0 820,0 800,130 600,100" fill="#f2f2f2" />
+    <polygon points="820,0 1000,0 950,110 800,130" fill="#ffffff" />
+    <polygon points="1000,0 1200,0 1150,140 950,110" fill="#f9f9f9" />
+    <polygon points="1200,0 1400,0 1350,120 1150,140" fill="#f1f1f1" />
+    <polygon points="1400,0 1650,0 1600,150 1350,120" fill="#e8e8e8" />
+    <polygon points="1650,0 1920,0 1920,100 1600,150" fill="#f6f6f6" />
+
+    <!-- Row 2 -->
+    <polygon points="0,80 120,100 140,220 0,200" fill="#f0f0f0" />
+    <polygon points="120,100 280,110 320,240 140,220" fill="#e5e5e5" />
+    <polygon points="280,110 450,120 480,260 320,240" fill="#fbfbfb" />
+    <polygon points="450,120 600,100 650,230 480,260" fill="#efefef" />
+    <polygon points="600,100 800,130 850,250 650,230" fill="#f4f4f4" />
+    <polygon points="800,130 950,110 1000,240 850,250" fill="#fafafa" />
+    <polygon points="950,110 1150,140 1200,260 1000,240" fill="#ededed" />
+    <polygon points="1150,140 1350,120 1400,280 1200,260" fill="#fcfcfc" />
+    <polygon points="1350,120 1600,150 1650,300 1400,280" fill="#f2f2f2" />
+    <polygon points="1600,150 1920,100 1920,250 1650,300" fill="#e0e0e0" />
+
+    <!-- Row 3 -->
+    <polygon points="0,200 140,220 160,350 0,330" fill="#f9f9f9" />
+    <polygon points="140,220 320,240 350,380 160,350" fill="#f2f2f2" />
+    <polygon points="320,240 480,260 520,390 350,380" fill="#e8e8e8" />
+    <polygon points="480,260 650,230 700,370 520,390" fill="#fcfcfc" />
+    <polygon points="650,230 850,250 900,400 700,370" fill="#f5f5f5" />
+    <polygon points="850,250 1000,240 1050,380 900,400" fill="#eeeeee" />
+    <polygon points="1000,240 1200,260 1250,420 1050,380" fill="#ffffff" />
+    <polygon points="1200,260 1400,280 1450,450 1250,420" fill="#f8f8f8" />
+    <polygon points="1400,280 1650,300 1700,460 1450,450" fill="#ebebeb" />
+    <polygon points="1650,300 1920,250 1920,400 1700,460" fill="#f4f4f4" />
+
+    <!-- Row 4 -->
+    <polygon points="0,330 160,350 180,500 0,480" fill="#f0f0f0" />
+    <polygon points="160,350 350,380 380,520 180,500" fill="#e0e0e0" />
+    <polygon points="350,380 520,390 550,540 380,520" fill="#fbfbfb" />
+    <polygon points="520,390 700,370 750,530 550,540" fill="#f2f2f2" />
+    <polygon points="700,370 900,400 950,550 750,530" fill="#e5e5e5" />
+    <polygon points="900,400 1050,380 1100,540 950,550" fill="#fafafa" />
+    <polygon points="1050,380 1250,420 1300,580 1100,540" fill="#ededed" />
+    <polygon points="1250,420 1450,450 1500,600 1300,580" fill="#fcfcfc" />
+    <polygon points="1450,450 1700,460 1750,620 1500,600" fill="#f8f8f8" />
+    <polygon points="1700,460 1920,400 1920,550 1750,620" fill="#eeeeee" />
+
+    <!-- Row 5 -->
+    <polygon points="0,480 180,500 200,650 0,630" fill="#fcfcfc" />
+    <polygon points="180,500 380,520 420,680 200,650" fill="#f5f5f5" />
+    <polygon points="380,520 550,540 600,700 420,680" fill="#e8e8e8" />
+    <polygon points="550,540 750,530 800,690 600,700" fill="#f2f2f2" />
+    <polygon points="750,530 950,550 1000,720 800,690" fill="#fafafa" />
+    <polygon points="950,550 1100,540 1150,710 1000,720" fill="#ededed" />
+    <polygon points="1100,540 1300,580 1350,740 1150,710" fill="#ffffff" />
+    <polygon points="1300,580 1500,600 1550,760 1350,740" fill="#f8f8f8" />
+    <polygon points="1500,600 1750,620 1800,780 1550,760" fill="#ebebeb" />
+    <polygon points="1750,620 1920,550 1920,700 1800,780" fill="#f4f4f4" />
+
+    <!-- Row 6 -->
+    <polygon points="0,630 200,650 220,800 0,780" fill="#f0f0f0" />
+    <polygon points="200,650 420,680 450,820 220,800" fill="#e0e0e0" />
+    <polygon points="420,680 600,700 650,840 450,820" fill="#fbfbfb" />
+    <polygon points="600,700 800,690 850,830 650,840" fill="#f2f2f2" />
+    <polygon points="800,690 1000,720 1050,850 850,830" fill="#e5e5e5" />
+    <polygon points="1000,720 1150,710 1200,840 1050,850" fill="#fafafa" />
+    <polygon points="1150,710 1350,740 1400,880 1200,840" fill="#ededed" />
+    <polygon points="1350,740 1550,760 1600,900 1400,880" fill="#fcfcfc" />
+    <polygon points="1550,760 1800,780 1850,920 1600,900" fill="#f8f8f8" />
+    <polygon points="1800,780 1920,700 1920,850 1850,920" fill="#eeeeee" />
+
+    <!-- Row 7 -->
+    <polygon points="0,780 220,800 240,950 0,930" fill="#fcfcfc" />
+    <polygon points="220,800 450,820 480,980 240,950" fill="#f5f5f5" />
+    <polygon points="450,820 650,840 700,1000 480,980" fill="#e8e8e8" />
+    <polygon points="650,840 850,830 900,990 700,1000" fill="#f2f2f2" />
+    <polygon points="850,830 1050,850 1100,1020 900,990" fill="#fafafa" />
+    <polygon points="1050,850 1200,840 1250,1010 1100,1020" fill="#ededed" />
+    <polygon points="1200,840 1400,880 1450,1040 1250,1010" fill="#ffffff" />
+    <polygon points="1400,880 1600,900 1650,1060 1450,1040" fill="#f8f8f8" />
+    <polygon points="1600,900 1850,920 1900,1080 1650,1060" fill="#ebebeb" />
+    <polygon points="1850,920 1920,850 1920,1000 1900,1080" fill="#f4f4f4" />
+
+    <!-- Row 8 (Bottom filling) -->
+    <polygon points="0,930 240,950 200,1080 0,1080" fill="#f0f0f0" />
+    <polygon points="240,950 480,980 450,1080 200,1080" fill="#e0e0e0" />
+    <polygon points="480,980 700,1000 650,1080 450,1080" fill="#fbfbfb" />
+    <polygon points="700,1000 900,990 850,1080 650,1080" fill="#f2f2f2" />
+    <polygon points="900,990 1100,1020 1050,1080 850,1080" fill="#e5e5e5" />
+    <polygon points="1100,1020 1250,1010 1200,1080 1050,1080" fill="#fafafa" />
+    <polygon points="1250,1010 1450,1040 1400,1080 1200,1080" fill="#ededed" />
+    <polygon points="1450,1040 1650,1060 1600,1080 1400,1080" fill="#fcfcfc" />
+    <polygon points="1650,1060 1900,1080 1850,1080 1600,1080" fill="#f8f8f8" />
+    <polygon points="1900,1080 1920,1000 1920,1080 1850,1080" fill="#eeeeee" />
+  </g>
+</svg>
