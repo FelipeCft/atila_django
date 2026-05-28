@@ -167,13 +167,16 @@ DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL', EMAIL_HOST_USER or 'noreply
 
 STATIC_URL = 'static/'
 
+# Tiempo de expiración del token de sesión (en minutos)
+TOKEN_EXPIRATION_MINUTES = 45
+
 # Django Rest Framework Configuration
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny',
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.TokenAuthentication', # Habilitar Token Auth
+        'users.authentication.ExpiringTokenAuthentication', # Token Auth con expiración de 30 min
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.BasicAuthentication',
     ],

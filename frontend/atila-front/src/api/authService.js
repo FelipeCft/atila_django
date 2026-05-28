@@ -23,6 +23,26 @@ api.interceptors.request.use(config => {
     return config;
 });
 
+// Interceptor de respuesta: si el backend devuelve 401 (token expirado/inválido),
+// limpiar la sesión local para forzar el re-login.
+api.interceptors.response.use(
+    response => response,
+    error => {
+        if (error.response?.status === 401) {
+            // Limpiar sesión local
+            localStorage.removeItem('atila_user');
+            localStorage.removeItem('atila_token');
+            localStorage.removeItem('atila_login_time');
+            // Redirigir al login si no estamos ya en esa página
+            if (!window.location.pathname.includes('/login')) {
+                window.location.href = '/login';
+            }
+        }
+        return Promise.reject(error);
+    }
+);
+
+
 /**
  * Servicio de autenticación para comunicarse con el backend
  */
