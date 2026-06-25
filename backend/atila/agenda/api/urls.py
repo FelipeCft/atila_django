@@ -9,7 +9,8 @@ from .views import (
     DashboardTrendsView,
     DashboardActivityView,
     DashboardTopServicesView,
-    SolicitudCitaViewSet
+    SolicitudCitaViewSet,
+    PublicDoctorAvailabilityView,
 )
 
 router = DefaultRouter()
@@ -25,4 +26,5 @@ urlpatterns = [
     path('dashboard/trends/', DashboardTrendsView.as_view(), name='dashboard-trends'),
     path('dashboard/activity/', DashboardActivityView.as_view(), name='dashboard-activity'),
     path('dashboard/top-services/', DashboardTopServicesView.as_view(), name='dashboard-top-services'),
+    path('disponibilidad-publica/', PublicDoctorAvailabilityView.as_view(), name='disponibilidad-publica'),
 ]

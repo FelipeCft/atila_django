@@ -11,7 +11,8 @@ const EditUserModal = ({ user, isOpen, onClose, onSave }) => {
         first_name: '',
         last_name: '',
         position: '',
-        role: ''
+        role: '',
+        agenda_color: ''
     });
     const [password, setPassword] = useState(''); // Only if changing
     const [loading, setLoading] = useState(false);
@@ -27,7 +28,8 @@ const EditUserModal = ({ user, isOpen, onClose, onSave }) => {
                 position: user.position || '',
                 rut: formatRut(user.rut) || '',
                 phone_number: formatPhone(user.phone_number) || '',
-                role: user.role
+                role: user.role,
+                agenda_color: user.agenda_color || '#3b82f6'
             });
             setPassword('');
             setError('');
@@ -251,6 +253,25 @@ const EditUserModal = ({ user, isOpen, onClose, onSave }) => {
                                     ))}
                                 </div>
                             </div>
+
+                            {/* Color Picker (Only for STAFF or ADMIN) */}
+                            {(formData.role === 'STAFF' || formData.role === 'ADMIN') && (
+                                <div>
+                                    <label className="block text-sm font-semibold text-slate-700 mb-2 ml-1">Color en Agenda</label>
+                                    <div className="flex items-center gap-4">
+                                        <input
+                                            type="color"
+                                            name="agenda_color"
+                                            value={formData.agenda_color}
+                                            onChange={handleChange}
+                                            className="w-14 h-14 rounded-xl cursor-pointer border-0 bg-transparent p-0"
+                                        />
+                                        <span className="text-sm font-medium text-slate-500 bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-200">
+                                            {formData.agenda_color}
+                                        </span>
+                                    </div>
+                                </div>
+                            )}
                         </div>
 
                         <div className="pt-4 flex justify-end gap-3">

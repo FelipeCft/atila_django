@@ -15,7 +15,8 @@ const CreateUser = () => {
         position: '',
         rut: '',
         phone_number: '',
-        role: 'CLIENT' // Default role
+        role: 'CLIENT', // Default role
+        agenda_color: '#3b82f6'
     });
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
@@ -129,7 +130,8 @@ const CreateUser = () => {
                 position: '',
                 rut: '',
                 phone_number: '',
-                role: 'CLIENT'
+                role: 'CLIENT',
+                agenda_color: '#3b82f6'
             });
         } catch (err) {
             if (err.username) setError(`Username: ${err.username[0]}`);
@@ -364,6 +366,25 @@ const CreateUser = () => {
                             </label>
                         </div>
                     </div>
+
+                    {/* Color Picker (Only for STAFF or ADMIN) */}
+                    {(formData.role === 'STAFF' || formData.role === 'ADMIN') && (
+                        <div>
+                            <label className="block text-sm font-semibold text-slate-700 mb-2 ml-1">Color en Agenda</label>
+                            <div className="flex items-center gap-4">
+                                <input
+                                    type="color"
+                                    name="agenda_color"
+                                    value={formData.agenda_color}
+                                    onChange={handleChange}
+                                    className="w-14 h-14 rounded-xl cursor-pointer border-0 bg-transparent p-0"
+                                />
+                                <span className="text-sm font-medium text-slate-500 bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-200">
+                                    {formData.agenda_color}
+                                </span>
+                            </div>
+                        </div>
+                    )}
                 </div>
 
                 {/* Warning banner for CLIENT with missing optional fields */}

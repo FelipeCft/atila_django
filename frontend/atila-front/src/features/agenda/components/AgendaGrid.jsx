@@ -43,11 +43,24 @@ const AgendaGrid = ({
 
                 {/* Render Citas */}
                 {layoutCitas.map(({ cita, style }) => {
-                    const staffColor = getStaffColor(cita.profesional?.id || cita.profesional);
                     const staffId = cita.profesional?.id || cita.profesional;
                     const staffMember = staffList.find(s => s.user_id === parseInt(staffId));
                     const staffName = staffMember ? staffMember.full_name : 'Staff';
+                    // Check if staffMember has agenda_color
+                    const staffColor = getStaffColor(staffId, staffMember?.agenda_color);
                     const startTime = new Date(cita.inicio).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+                    // Setup classes and inline styles based on if it's custom or not
+                    const customStyle = staffColor.isCustom ? {
+                        backgroundColor: staffColor.backgroundColor,
+                        borderColor: staffColor.borderColor,
+                        color: staffColor.color
+                    } : {};
+                    
+                    const combinedStyle = { ...style, ...customStyle };
+                    const cardClasses = staffColor.isCustom 
+                        ? "" 
+                        : `${staffColor.bg} ${staffColor.border} ${staffColor.text}`;
 
                     return (
                         <div
@@ -56,25 +69,25 @@ const AgendaGrid = ({
                                 e.stopPropagation();
                                 onCitaClick(cita);
                             }}
-                            className={`absolute rounded-lg border-l-4 p-1.5 text-xs cursor-pointer hover:shadow-xl z-10 hover:brightness-100 group overflow-hidden leading-tight ${isMobile ? '' : 'cita-card-hover'} ${staffColor.bg} ${staffColor.border}`}
-                            style={style}
+                            className={`absolute rounded-lg border-l-4 p-1.5 text-xs cursor-pointer hover:shadow-xl z-10 hover:brightness-100 group overflow-hidden leading-tight ${isMobile ? '' : 'cita-card-hover'} ${cardClasses}`}
+                            style={combinedStyle}
                         >
                             {/* Header: Service & Time */}
                             <div className="flex justify-between items-start gap-1">
-                                <span className={`font-bold truncate group-hover:whitespace-normal ${staffColor.text}`}>
+                                <span className={`font-bold truncate group-hover:whitespace-normal ${staffColor.isCustom ? '' : staffColor.text}`}>
                                     {cita.servicio_data?.nombre || 'Servicio'}
                                 </span>
                                 <div className="flex items-center gap-1 shrink-0">
-                                    {cita.estado === 'CONFIRMED' && <CheckCircle size={10} className="text-emerald-600" />}
-                                    {cita.estado === 'PENDING' && <Clock size={10} className="text-amber-600" />}
-                                    <span className={`text-[10px] font-mono opacity-80 ${staffColor.text}`}>
+                                    {cita.estado === 'CONFIRMED' && <CheckCircle size={10} className="opacity-80" />}
+                                    {cita.estado === 'PENDING' && <Clock size={10} className="opacity-80" />}
+                                    <span className={`text-[10px] font-mono opacity-80 ${staffColor.isCustom ? '' : staffColor.text}`}>
                                         {startTime}
                                     </span>
                                 </div>
                             </div>
 
                             {/* Client */}
-                            <div className={`truncate group-hover:whitespace-normal font-medium mb-0.5 ${staffColor.text}`}>
+                            <div className={`truncate group-hover:whitespace-normal font-medium mb-0.5 ${staffColor.isCustom ? '' : staffColor.text}`}>
                                 <User size={10} className="inline mr-1 opacity-70" />
                                 {cita.cliente_data?.full_name}
                             </div>
@@ -89,7 +102,7 @@ const AgendaGrid = ({
                             </div>
 
                             {/* Staff */}
-                            <div className={`truncate group-hover:whitespace-normal opacity-80 text-[10px] ${staffColor.text}`}>
+                            <div className={`truncate group-hover:whitespace-normal opacity-80 text-[10px] ${staffColor.isCustom ? '' : staffColor.text}`}>
                                 <span className="opacity-70">Atiende: </span>
                                 {staffName}
                             </div>

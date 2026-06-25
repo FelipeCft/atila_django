@@ -14,6 +14,7 @@ import VerifyEmail from '../pages/VerifyEmail';
 import ConfirmarCita from '../pages/ConfirmarCita';
 import AdminDashboard from '../pages/AdminDashboard';
 import StaffDashboard from '../pages/StaffDashboard';
+import AgendaPublica from '../pages/AgendaPublica';
 
 import AgendaAdmin from '../components/admin/AgendaAdmin';
 import SolicitudesAdmin from '../components/admin/SolicitudesAdmin';
@@ -31,6 +32,7 @@ const AppRoutes = () => {
             <Route path="/register" element={<MainLayout><Register /></MainLayout>} />
             <Route path="/verify-email/:uid/:token" element={<MainLayout><VerifyEmail /></MainLayout>} />
             <Route path="/confirmar-cita/:token" element={<MainLayout><ConfirmarCita /></MainLayout>} />
+            <Route path="/agenda-publica" element={<MainLayout><AgendaPublica /></MainLayout>} />
 
             {/* Protected Routes - ADMIN */}
             <Route element={<ProtectedRoute allowedRoles={['ADMIN']} />}>

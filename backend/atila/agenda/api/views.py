@@ -561,6 +561,104 @@ class DashboardTopServicesView(APIView):
         })
 
 
+class PublicDoctorAvailabilityView(APIView):
+    """
+    Endpoint PÚBLICO (sin autenticación) para ver la disponibilidad de doctores.
+    Retorna el horario semanal del doctor y los bloques de tiempo ya ocupados,
+    SIN revelar ninguna información de citas ni pacientes.
+    Query params:
+      - profesional_id: (int) filtra por un profesional específico
+      - servicio_id: (int) filtra por servicio (via especialidades del profesional)
+    """
+    permission_classes = [permissions.AllowAny]
+
+    def get(self, request):
+        from django.contrib.auth import get_user_model
+        from users.models import Profile
+        from datetime import date, timedelta
+
+        User = get_user_model()
+
+        profesional_id = request.query_params.get('profesional_id')
+        servicio_id = request.query_params.get('servicio_id')
+
+        # Base queryset: solo personal activo con horarios configurados
+        staff_qs = User.objects.filter(
+            profile__role=Profile.Role.STAFF,
+            is_active=True,
+            horarios_disponibles__isnull=False
+        ).distinct()
+
+        if profesional_id:
+            staff_qs = staff_qs.filter(pk=profesional_id)
+
+        if servicio_id:
+            # Filtrar por servicio via especialidades del profesional
+            from servicios.models import Servicio
+            try:
+                servicio = Servicio.objects.get(pk=servicio_id)
+                if servicio.especialidad:
+                    staff_qs = staff_qs.filter(
+                        especialidades=servicio.especialidad
+                    )
+            except Servicio.DoesNotExist:
+                pass
+
+        # Semana actual: lunes a domingo
+        today = timezone.now().date()
+        monday = today - timedelta(days=today.weekday())
+        week_dates = [monday + timedelta(days=i) for i in range(7)]
+
+        result = []
+        for staff in staff_qs:
+            profile = staff.profile
+            horarios = HorarioDisponible.objects.filter(profesional=staff)
+
+            horarios_data = []
+            for horario in horarios.order_by('dia_semana'):
+                # Encontrar la fecha de este día en la semana actual
+                day_date = week_dates[horario.dia_semana]
+                day_start = timezone.make_aware(
+                    datetime.combine(day_date, horario.hora_inicio)
+                )
+                day_end = timezone.make_aware(
+                    datetime.combine(day_date, horario.hora_fin)
+                )
+
+                # Obtener citas en ese bloque (NO canceladas), sin datos de paciente
+                citas_dia = Cita.objects.filter(
+                    profesional=staff,
+                    inicio__gte=day_start,
+                    fin__lte=day_end,
+                ).exclude(estado='CANCELLED').order_by('inicio')
+
+                # Solo retornar inicio/fin del bloque ocupado — sin info de paciente
+                bloques_ocupados = [
+                    {
+                        'inicio': c.inicio.isoformat(),
+                        'fin': c.fin.isoformat(),
+                    }
+                    for c in citas_dia
+                ]
+
+                horarios_data.append({
+                    'dia_semana': horario.dia_semana,
+                    'hora_inicio': horario.hora_inicio.strftime('%H:%M'),
+                    'hora_fin': horario.hora_fin.strftime('%H:%M'),
+                    'fecha': day_date.isoformat(),
+                    'bloques_ocupados': bloques_ocupados,
+                })
+
+            result.append({
+                'profesional_id': staff.pk,
+                'nombre': profile.full_name,
+                'cargo': profile.position or '',
+                'horarios': horarios_data,
+            })
+
+        return Response(result)
+
+
 class SolicitudCitaViewSet(viewsets.ModelViewSet):
     queryset = SolicitudCita.objects.all().order_by('-creado_en')
     serializer_class = SolicitudCitaSerializer

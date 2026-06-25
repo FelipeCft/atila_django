@@ -17,7 +17,7 @@ class ProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Profile
-        fields = ['id', 'user_id', 'username', 'email', 'first_name', 'last_name', 'full_name', 'is_active', 'password', 'position', 'role', 'rut', 'phone_number', 'especialidades']
+        fields = ['id', 'user_id', 'username', 'email', 'first_name', 'last_name', 'full_name', 'is_active', 'password', 'position', 'role', 'rut', 'phone_number', 'especialidades', 'agenda_color']
 
     def validate_rut(self, value):
         if value and value.strip():
@@ -191,10 +191,11 @@ class AdminRegisterSerializer(serializers.ModelSerializer):
     role = serializers.ChoiceField(choices=Profile.Role.choices, required=True)
     rut = serializers.CharField(required=False, allow_blank=True)
     phone_number = serializers.CharField(required=False, allow_blank=True)
+    agenda_color = serializers.CharField(required=False, allow_blank=True, default='#3b82f6')
 
     class Meta:
         model = Profile
-        fields = ['username', 'email', 'password', 'first_name', 'last_name', 'position', 'role', 'rut', 'phone_number']
+        fields = ['username', 'email', 'password', 'first_name', 'last_name', 'position', 'role', 'rut', 'phone_number', 'agenda_color']
 
     def validate(self, data):
         """Para roles ADMIN y STAFF, exigir nombre, apellido, cargo y email"""
@@ -262,6 +263,7 @@ class AdminRegisterSerializer(serializers.ModelSerializer):
                 'role': role,  # Rol seleccionado por el admin
                 'rut': validated_data.get('rut', ''),
                 'phone_number': validated_data.get('phone_number', ''),
+                'agenda_color': validated_data.get('agenda_color', '#3b82f6'),
                 'is_verified': True  # Admin avala al usuario, no necesita verificar correo
             }
         )

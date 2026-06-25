@@ -12,9 +12,11 @@ const Navbar = ({ isVisible = true, setIsVisible }) => {
     const navLinks = [
         { name: 'Home', path: '/' },
         { name: 'Servicios', path: '/servicios' },
+        { name: 'Disponibilidad', path: '/agenda-publica' },
         { name: 'Convenios', path: '/convenios' },
         { name: 'Contacto', path: '/contacto' },
     ];
+
 
     // Enlaces adicionales si el usuario es staff/admin
     if (user?.role === 'ADMIN') {

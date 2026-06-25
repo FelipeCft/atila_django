@@ -91,6 +91,26 @@ export const computeLayout = (events) => {
     return layoutEvents;
 };
 
+// Calculate if a hex color is light or dark to return white or black text
+export const getContrastColor = (hexColor) => {
+    if (!hexColor) return '#ffffff';
+    // Remove hash if exists
+    const hex = hexColor.replace('#', '');
+    if (hex.length !== 6) return '#ffffff';
+    
+    // Convert to RGB
+    const r = parseInt(hex.substr(0, 2), 16);
+    const g = parseInt(hex.substr(2, 2), 16);
+    const b = parseInt(hex.substr(4, 2), 16);
+    
+    // Calculate relative luminance
+    // Using sRGB luminance formula: L = 0.2126 * R + 0.7152 * G + 0.0722 * B
+    // We adjust it for a simpler perceptive formula
+    const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+    
+    return luminance > 0.5 ? '#1e293b' : '#ffffff'; // slate-800 or white
+};
+
 export const STAFF_COLORS = [
     { bg: 'bg-blue-200', border: 'border-blue-600', text: 'text-blue-900' },
     { bg: 'bg-green-200', border: 'border-green-600', text: 'text-green-900' },
@@ -102,8 +122,19 @@ export const STAFF_COLORS = [
     { bg: 'bg-fuchsia-200', border: 'border-fuchsia-600', text: 'text-fuchsia-900' },
 ];
 
-export const getStaffColor = (id) => {
-    if (!id) return STAFF_COLORS[0];
+export const getStaffColor = (id, agendaColor = null) => {
+    // If we have a custom hex color from the backend
+    if (agendaColor) {
+        return {
+            isCustom: true,
+            backgroundColor: agendaColor,
+            borderColor: agendaColor, // can darken it later if needed
+            color: getContrastColor(agendaColor)
+        };
+    }
+    
+    // Fallback to old behavior
+    if (!id) return { ...STAFF_COLORS[0], isCustom: false };
     const index = typeof id === 'number' ? id % STAFF_COLORS.length : parseInt(id) % STAFF_COLORS.length;
-    return STAFF_COLORS[isNaN(index) ? 0 : index];
+    return { ...STAFF_COLORS[isNaN(index) ? 0 : index], isCustom: false };
 };

@@ -4,6 +4,7 @@ import { ui } from '../../utilities/ui';
 import { getCitas } from '../../api/agenda';
 import { useAuth } from '../../context/AuthContext';
 import CurrentTimeLine from '../../features/agenda/components/CurrentTimeLine';
+import { getStaffColor } from '../../features/agenda/utils/gridUtils';
 
 const DAY_LABELS = ['Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab', 'Dom'];
 
@@ -80,15 +81,30 @@ const AgendaStaff = () => {
                 const top = (startHour - 8) * 96;
                 const height = duration * 96;
 
+                // Determine color based on user's profile
+                const staffColor = getStaffColor(user?.id, user?.profile?.agenda_color || user?.agenda_color);
+                
+                const customStyle = staffColor.isCustom ? {
+                    backgroundColor: staffColor.backgroundColor,
+                    borderColor: staffColor.borderColor,
+                    color: staffColor.color
+                } : {};
+
+                const cardClasses = staffColor.isCustom 
+                    ? "" 
+                    : `${staffColor.bg} ${staffColor.border}`;
+                    
+                const textClasses = staffColor.isCustom ? "" : staffColor.text;
+
                 return (
                     <div
                         key={cita.id}
-                        className="absolute left-1 right-1 rounded-lg bg-emerald-200 border-l-4 border-emerald-600 p-2 text-xs overflow-hidden hover:shadow-lg transition-all z-10"
-                        style={{ top: `${top}px`, height: `${height}px` }}
+                        className={`absolute left-1 right-1 rounded-lg border-l-4 p-2 text-xs overflow-hidden hover:shadow-lg transition-all z-10 ${cardClasses}`}
+                        style={{ top: `${top}px`, height: `${height}px`, ...customStyle }}
                     >
-                        <div className="font-bold text-emerald-900 truncate">{cita.servicio_data?.nombre || 'Servicio'}</div>
-                        <div className="text-emerald-800 truncate">{cita.cliente_data?.full_name}</div>
-                        <div className="text-emerald-800 text-[10px]">
+                        <div className={`font-bold truncate ${textClasses}`}>{cita.servicio_data?.nombre || 'Servicio'}</div>
+                        <div className={`truncate ${textClasses}`}>{cita.cliente_data?.full_name}</div>
+                        <div className={`text-[10px] ${textClasses}`}>
                             {start.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} - {end.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                         </div>
                     </div>

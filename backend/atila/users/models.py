@@ -19,6 +19,7 @@ class Profile(models.Model):
     is_verified = models.BooleanField(default=False)
     rut = models.CharField(max_length=12, null=True, blank=True)
     phone_number = models.CharField(max_length=20, null=True, blank=True)
+    agenda_color = models.CharField(max_length=7, default='#3b82f6')
 
     @property
     def full_name(self):

@@ -1,6 +1,13 @@
 import { api } from './authService';
+import axios from 'axios';
 
 const BASE_URL = 'agenda/';
+
+// --- función helper para llamadas sin autenticación ---
+const publicApi = axios.create({
+    baseURL: api.defaults.baseURL,
+});
+
 
 // Citas
 export const getCitas = async () => {
@@ -121,3 +128,19 @@ export const toggleHorarioGeneralActive = async (id) => {
         throw error.response?.data || error.message;
     }
 };
+
+// ─── Disponibilidad Pública (sin autenticación) ───────────────────────────
+
+/**
+ * Obtiene la disponibilidad semanal de los doctores sin datos de pacientes.
+ * @param {Object} params - { profesional_id?, servicio_id? }
+ */
+export const getDisponibilidadPublica = async (params = {}) => {
+    try {
+        const response = await publicApi.get(`${BASE_URL}disponibilidad-publica/`, { params });
+        return response.data;
+    } catch (error) {
+        throw error.response?.data || error.message;
+    }
+};
+
